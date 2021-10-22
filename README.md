@@ -1,4 +1,4 @@
-# nginx-load-balancer
+# Docker Nginx Load Balancer
 Nginx Load-Balancer
 
 ```
