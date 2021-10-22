@@ -1,0 +1,20 @@
+version: "3.4"
+
+services: 
+    load-balance:
+        image: nginx:latest
+        container_name: load-balance
+        volumes: 
+            - ./nginx:/etc/nginx/conf.d/
+        networks: 
+            - laravel-prod
+        ports: 
+            - "80:80"
+            - "443:443"
+
+
+
+networks: 
+    laravel-prod:
+        driver: bridge
+        external: true
