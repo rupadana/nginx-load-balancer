@@ -1,20 +1,26 @@
 version: "3.4"
 
-services: 
+services:
     load-balance:
         image: nginx:latest
         container_name: load-balance
-        volumes: 
+        volumes:
             - ./nginx:/etc/nginx/conf.d/
-        networks: 
-            - yours-network
-        ports: 
+            - ./certbot/conf:/etc/letsencrypt
+            - ./certbot/www:/var/www/certbot
+        networks:
+            - rupadana-my-id
+        ports:
             - "80:80"
             - "443:443"
-
-
-
-networks: 
-    yours-network:
+    certbot:
+        image: certbot/certbot
+        container_name: certbot
+        volumes:
+            - ./certbot/conf:/etc/letsencrypt
+            - ./certbot/www:/var/www/certbot
+        command: certonly --webroot -w /var/www/certbot --force-renewal --email rupadanawayan@gmail.com -d test.rupadana.my.id --agree-tos
+networks:
+    rupadana-my-id:
         driver: bridge
         external: true
